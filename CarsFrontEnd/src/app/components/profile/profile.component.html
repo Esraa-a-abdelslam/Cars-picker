@@ -1,0 +1,121 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-5 col-sm-12">
+      <i class="fa fa-user mr-1 my-3"></i>
+      <h3 class="d-inline my-3 info">{{ prof.fullname }}</h3>
+      <br />
+      <i class="fa fa-mobile mr-1 my-3"></i>
+      <h5 class="d-inline my-3 info" *ngIf="prof.phone; else phonesBlock">
+        Not Available
+      </h5>
+      <br />
+      <ng-template #phonesBlock
+        ><h5 class="d-inline my-3 info">
+          {{ prof.phoneNo }}
+        </h5>
+        <br
+      /></ng-template>
+      <i class="fa fa-envelope mr-1 my-3"></i>
+      <h5 class="d-inline my-3 info">{{ prof.email }}</h5>
+      <br />
+      <button *ngIf="same" type="submit" class="btn btn-warning my-3 d-block">
+        Change Information
+      </button>
+    </div>
+    <div class="col-lg-7 col-sm-12">
+      <div class="notFound" *ngIf="cars.length == 0">
+        <p class="my-2">You don't have any car !</p>
+        <img src="../../../assets/sad.png" class="w-100" />
+      </div>
+
+      <div class="card my-3" style="max-width: 450px" *ngFor="let car of cars">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img
+              src="assets/CarsImages/{{ car.imgName }}"
+              alt="..."
+              class="w-100 h-100"
+            />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-10">
+                  <h5 class="card-title c1">{{ car.carName }}</h5>
+                  <h5 class="card-title c2">{{ car.className }}</h5>
+                </div>
+                <div class="col-2">
+                  <div class="dropdown">
+                    <button
+                      class="btn"
+                      type="button"
+                      id="dropdownMenu2"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                      <button
+                        class="dropdown-item"
+                        type="button"
+                        [routerLink]="['/car-details']"
+                        [queryParams]="{ id: car.carDetailsId }"
+                      >
+                        Main details
+                      </button>
+                      <button
+                        class="dropdown-item"
+                        type="button"
+                        [routerLink]="['/car-details']"
+                        [queryParams]="{ id: car.carDetailsId, user: 'from' }"
+                      >
+                        User's details
+                      </button>
+                      <button
+                        *ngIf="same"
+                        class="dropdown-item"
+                        type="button"
+                        [routerLink]="['/Basic-info']"
+                        [queryParams]="{ id: car.carDetailsId, oper: 'rent' }"
+                      >
+                        Rent This Car
+                      </button>
+                      <button
+                        *ngIf="same"
+                        class="dropdown-item"
+                        type="button"
+                        [routerLink]="['/Basic-info']"
+                        [queryParams]="{ id: car.carDetailsId, oper: 'sell' }"
+                      >
+                        Sell This Car
+                      </button>
+                      <button
+                        *ngIf="same"
+                        (click)="delete(car.userCarId)"
+                        class="dropdown-item"
+                        type="button"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-warning my-3"
+        [routerLink]="['/choose-car']"
+        *ngIf="same"
+      >
+        Choose My Car Now
+      </button>
+    </div>
+  </div>
+</div>
